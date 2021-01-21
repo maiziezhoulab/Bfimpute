@@ -41,7 +41,7 @@
 #' @param sn_init Initial adaptive precision. Default is \code{1}.
 #' @param threshold The threshold on dropout probabilities. (will only be used
 #' when \code{method} is set to \code{1}). Default is \code{0.5}.
-#' @param ncores Number of cores to use. Default is \code{1}.
+#' @param ncores Number of cores to use. Default is \code{5}.
 #' @param out_dir The path and folder to store the results. Default is
 #' \code{"./Bfimpute/"}.
 #' @param out_name The file name which Bfimpute will save as. Default is
@@ -68,7 +68,6 @@
 #' \donttest{
 #' library(Bfimpute)
 #' # use the following commands to generate simulated data
-#' # or you can use your own data
 #' if(!requireNamespace("splatter", quietly = TRUE)) stop('The package splatter was not installed')
 #' if(!requireNamespace("scater", quietly = TRUE)) stop('The package scater was not installed')
 #' sce <- scater::mockSCE()
@@ -82,9 +81,10 @@
 #'                                           dropout.type = "experiment"))
 #' sim <- splatter::splatSimulate(params, method = "groups")
 #' counts <- sim@assays@data@listData[["counts"]]
+#' # or you can use your own data and make its name \code{counts}
 #' counts_imputed <- Bfimpute(counts, ccluster = "Seurat", label = NULL,
 #'                            normalized = FALSE, S_G = NULL, S_C = NULL,
-#'                            ncores = 1)
+#'                            ncores = 5)
 #' }
 #'
 #' @author Zihang Wen, \email{wenzihang0506@gmail.com}
@@ -94,7 +94,7 @@
 Bfimpute <- function(counts, method = 1, ccluster = 10, label = NULL,
                      normalized = FALSE, S_G = NULL, S_C = NULL, D = 32,
                      totalepoch = 300, burnin = 200, sn_max = 10, sn_init = 1,
-                     threshold = 0.5, ncores = 1, out_dir = "./Bfimpute/",
+                     threshold = 0.5, ncores = 5, out_dir = "./Bfimpute/",
                      out_name = "Bfimpute", out_type = "all"){
   counts = as.matrix(counts)
   print("Running Bfimpute")
@@ -137,7 +137,7 @@ Bfimpute <- function(counts, method = 1, ccluster = 10, label = NULL,
       }
 
       return(Gibbs_sampling(counts_cc, S_G_cc, S_C_cc, D, totalepoch, burnin, sn_max, sn_init, method))
-    }, mc.cores = min(ncores, length(slist)))
+    }, mc.cores = ncores)
     R_calculate = counts
     for(cc in 1:length(slist)){
       R_calculate[slist[[cc]]$selectgs, slist[[cc]]$cells] = R_calculate_list[[cc]]

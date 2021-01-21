@@ -18,7 +18,7 @@ Bfimpute(
   sn_max = 10,
   sn_init = 1,
   threshold = 0.5,
-  ncores = 1,
+  ncores = 5,
   out_dir = "./Bfimpute/",
   out_name = "Bfimpute",
   out_type = "all"
@@ -70,7 +70,7 @@ Markov chain. Default is \code{200}.}
 \item{threshold}{The threshold on dropout probabilities. (will only be used
 when \code{method} is set to \code{1}). Default is \code{0.5}.}
 
-\item{ncores}{Number of cores to use. Default is \code{1}.}
+\item{ncores}{Number of cores to use. Default is \code{5}.}
 
 \item{out_dir}{The path and folder to store the results. Default is
 \code{"./Bfimpute/"}.}
@@ -103,7 +103,6 @@ incorporates side information to train the model and perform the imputation.
 \donttest{
 library(Bfimpute)
 # use the following commands to generate simulated data
-# or you can use your own data
 if(!requireNamespace("splatter", quietly = TRUE)) stop('The package splatter was not installed')
 if(!requireNamespace("scater", quietly = TRUE)) stop('The package scater was not installed')
 sce <- scater::mockSCE()
@@ -117,9 +116,10 @@ params <- splatter::setParams(params, update = list(nGenes = 20000,
                                           dropout.type = "experiment"))
 sim <- splatter::splatSimulate(params, method = "groups")
 counts <- sim@assays@data@listData[["counts"]]
+# or you can use your own data and make its name \code{counts}
 counts_imputed <- Bfimpute(counts, ccluster = "Seurat", label = NULL,
                            normalized = FALSE, S_G = NULL, S_C = NULL,
-                           ncores = 1)
+                           ncores = 5)
 }
 
 }

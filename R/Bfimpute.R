@@ -81,7 +81,7 @@
 #'                                           dropout.type = "experiment"))
 #' sim <- splatter::splatSimulate(params, method = "groups")
 #' counts <- sim@assays@data@listData[["counts"]]
-#' # or you can use your own data and make its name \code{counts}
+#' # or you can use your own data and make its name counts
 #' counts_imputed <- Bfimpute(counts, ccluster = "Seurat", label = NULL,
 #'                            normalized = FALSE, S_G = NULL, S_C = NULL,
 #'                            ncores = 5)

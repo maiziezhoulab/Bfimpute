@@ -26,7 +26,7 @@
 #' with one row or one column, and etc (will only be used when \code{ccluster}
 #' is set to \code{labeled}). Default is \code{NULL}.
 #' @param normalized Whether the \code{counts} is raw or not. \code{FALSE} for
-#' raw and \code{TRUE} for not. Default is {FALSE}.
+#' raw and \code{TRUE} for not. Default is \code{FALSE}.
 #' @param S_G Gene latent matrix with \code{D} rows and the columns
 #' corresponding to genes. Default is \code{NULL} which means no Gene latent
 #' matrix.

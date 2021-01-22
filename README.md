@@ -83,3 +83,6 @@ Larger `D`, `totalepoch`, and `burnin` will increase the accuracy of the
 imputation, but it may take more efforts to run the process as a price.
 On the contrary, smaller parameters will save your time.
 
+## Reference
+
+

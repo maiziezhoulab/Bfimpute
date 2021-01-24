@@ -171,15 +171,15 @@ Bfimpute <- function(counts, method = 1, ccluster = 10, label = NULL,
   }
   dir.create(out_dir, recursive = TRUE)
   if(out_type == "all"){
-    write.csv(R_calculate, file = paste0(out_dir, out_name, ".csv"))
-    write.table(R_calculate, file = paste0(out_dir, out_name, ".txt"))
-    saveRDS(R_calculate, file = paste0(out_dir, out_name, ".rds"))
+    write.csv(R_calculate, file = paste0(out_dir, "/", out_name, ".csv"))
+    write.table(R_calculate, file = paste0(out_dir, "/", out_name, ".txt"))
+    saveRDS(R_calculate, file = paste0(out_dir, "/", out_name, ".rds"))
   }else if(out_type == "csv"){
-    write.csv(R_calculate, file = paste0(out_dir, out_name, ".csv"))
+    write.csv(R_calculate, file = paste0(out_dir, "/", out_name, ".csv"))
   }else if(out_type == "txt"){
-    write.table(R_calculate, file = paste0(out_dir, out_name, ".txt"))
+    write.table(R_calculate, file = paste0(out_dir, "/", out_name, ".txt"))
   }else if(out_type == "rds"){
-    saveRDS(R_calculate, file = paste0(out_dir, out_name, ".rds"))
+    saveRDS(R_calculate, file = paste0(out_dir, "/", out_name, ".rds"))
   }
 
   print("Finish imputing")

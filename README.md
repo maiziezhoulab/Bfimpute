@@ -10,28 +10,53 @@ You can also install the most recent updates of Bfimpute from github with:
 devtools::install_github("maiziezhoulab/Bfimpute")
 ```
 
-## Quick start
-library(Bfimpute)
+## Examples
+In this section we will run the dataset from [Chu. et al (2016)](https://link.springer.com/article/10.1186/s13059-016-1033-x)
+and the version with QC can be downloaded from
+[here](https://drive.google.com/drive/folders/1C2rjTDy3Lvi4DE988FvGSOOCODVUyDI-?usp=sharing).
+
+### Quick start
 ```R
-# use the following commands to generate simulated data
-if(!requireNamespace("splatter", quietly = TRUE)) stop('The package splatter was not installed')
-if(!requireNamespace("scater", quietly = TRUE)) stop('The package scater was not installed')
-sce <- scater::mockSCE()
-params <- splatter::splatEstimate(sce)
-params <- splatter::setParams(params, update = list(nGenes = 20000,
-                                          group.prob = rep(0.125,8),
-                                          de.prob = 0.08,
-                                          de.facLoc = 0.3,
-                                          de.facScale = 0.5,
-                                          batchCells = 800,
-                                          dropout.type = "experiment"))
-sim <- splatter::splatSimulate(params, method = "groups")
-counts <- sim@assays@data@listData[["counts"]]
-# or you can use your own data and make its name counts
-counts_imputed <- Bfimpute(counts, ccluster = "Seurat", label = NULL,
-                           normalized = FALSE, S_G = NULL, S_C = NULL,
-                           ncores = 5)
+library(Bfimpute)
 ```
+Set the folder direction of your data below:
+```R
+data_dir = "../"
+```
+For dataset we present, you can load the cell types, bulk and single-cell counts
+matrices as followed:
+```R
+counts = read.csv(paste0(data_dir, "sc_qc.csv"), row.names = 1, header = T)
+# counts[1:5,1:5]
+bulk = read.csv(paste0(data_dir, "bulk_qc.csv"), row.names = 1, header = T)
+# bulk[1:5,1:5]
+cell_type = read.csv(paste0(data_dir, "cell_type.csv"), row.names = 1, header = T)
+# unique(cell_type)
+```
+As we already know that there are `7` cell types in this dataset, we can run
+Bfimpute as shown:
+```R
+counts_imputed <- Bfimpute(counts, ccluster = 7, ncores = 5)
+```
+
+### Label
+If the labeled cell type is given as it is now, we can use them to
+assist the imputation:
+```R
+counts_imputed <- Bfimpute(counts, ccluster = "labeled", label = cell_type, ncores = 5)
+```
+
+### Side information
+If some gene side information is available for the raw counts, make it a
+positive matrix and having columns in the same gene orders as in the row of the
+count matrix. And we can use them to assist the model training.
+```R
+S_G = t(bulk)
+counts_imputed <- Bfimpute(counts, ccluster = "labeled", label = cell_type, S_G = S_G, ncores = 5)
+```
+Similarly, if some cell side information is also available, make it a positive
+matrix and having columns in the same cell orders as in the column of the count
+matrix. And use the parameter `S_C` in the same way.
 
 ## Parameters
 ### Required

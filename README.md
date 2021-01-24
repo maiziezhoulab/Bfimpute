@@ -33,8 +33,7 @@ bulk = read.csv(paste0(data_dir, "bulk_qc.csv"), row.names = 1, header = T)
 cell_type = read.csv(paste0(data_dir, "cell_type.csv"), row.names = 1, header = T)
 # unique(cell_type)
 ```
-As we already know that there are `7` cell types in this dataset, we can run
-Bfimpute as shown:
+we can run Bfimpute as shown:
 ```R
 counts_imputed <- Bfimpute(counts, ccluster = 7, ncores = 5)
 ```

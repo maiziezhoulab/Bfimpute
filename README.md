@@ -21,7 +21,7 @@ library(Bfimpute)
 ```
 Set the folder direction of your data below:
 ```R
-data_dir = "../"
+data_dir = "./"
 ```
 For dataset we present, you can load the cell types, bulk and single-cell counts
 matrices as followed:

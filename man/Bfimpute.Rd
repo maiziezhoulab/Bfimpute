@@ -34,9 +34,9 @@ imputation. Default is \code{1}.}
 
 \item{ccluster}{The cluster approach: give \code{labeled} and corporate with
 param \code{label} (see details in \code{label}) if the cells are
-labeled, give the specific number \code{5} or \code{6} or ... if only the
-cluster number is known, give \code{Seurat} and we will detect the clusters
-on our own if lack of information, and of cause you can use your own cluster
+labeled; give the specific number \code{5} or \code{6} or ... if only the
+cluster number is known; give \code{Seurat} and we will detect the clusters
+on our own if lack of information; and of cause you can use your own cluster
 method and give us a function with a matrix as input and a vector as output
 (will only be used when \code{method} is set to \code{1}). Default is
 \code{Seurat}.}
@@ -46,7 +46,7 @@ with one row or one column, and etc (will only be used when \code{ccluster}
 is set to \code{labeled}). Default is \code{NULL}.}
 
 \item{normalized}{Whether the \code{counts} is raw or not. \code{FALSE} for
-raw and \code{TRUE} for not. Default is {FALSE}.}
+raw and \code{TRUE} for not. Default is \code{FALSE}.}
 
 \item{S_G}{Gene latent matrix with \code{D} rows and the columns
 corresponding to genes. Default is \code{NULL} which means no Gene latent

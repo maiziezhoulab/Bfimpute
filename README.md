@@ -60,7 +60,7 @@ counts_imp = Bfimpute(counts = counts, ccluster = ccluster, out_type = "none")
 
 ### with labels instead of clustering
 If the labeled cell type is given as it is now, we can use them to replace
-clustering step with more accuracy:
+clustering step and gain more accuracy:
 ```R
 counts_imputed <- Bfimpute(counts, ccluster = "labeled", label = cell_type, ncores = 5)
 ```

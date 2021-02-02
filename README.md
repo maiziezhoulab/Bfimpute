@@ -48,8 +48,8 @@ counts_imputed <- Bfimpute(counts, ccluster = 7, ncores = 5)
 ### with other clustering methods
 If other clustering methods implemented in the future is more powerful, we can
 easily use them and replace our clustering step by building a function. The
-input of `ccluster` should be a matrix with points to cluster as columns and
-rows as features.
+input of function `ccluster` should be a matrix with points to cluster as
+columns and rows as features.
 
 We present `kmeans` as an example here:
 ```R

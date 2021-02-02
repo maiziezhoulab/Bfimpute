@@ -15,7 +15,7 @@ In this section we will run the dataset from [Chu. et al (2016)](https://link.sp
 and the version with QC can be downloaded from
 [here](https://drive.google.com/drive/folders/1C2rjTDy3Lvi4DE988FvGSOOCODVUyDI-?usp=sharing).
 
-### Seurat clustering
+### with Seurat clustering
 ```R
 library(Bfimpute)
 ```
@@ -38,14 +38,14 @@ Run `Bfimpute` with unsupervised clustering `Seurat` as default:
 counts_imputed <- Bfimpute(counts, ncores = 5)
 ```
 
-### Spectrum clustering
+### with Spectrum clustering
 As we already know that there are `7` cell types in this dataset, we can run
 `Bfimpute` using `Spectrum` as shown:
 ```R
 counts_imputed <- Bfimpute(counts, ccluster = 7, ncores = 5)
 ```
 
-### Other clustering methods
+### with other clustering methods
 If other clustering methods implemented in the future is more powerful, we can
 easily use them and replace our clustering step by building a function. The
 input of `ccluster` should be a matrix with points to cluster as columns and
@@ -58,7 +58,7 @@ ccluster = function(x){kmeans(t(x), centers = N)$cluster}
 counts_imp = Bfimpute(counts = counts, ccluster = ccluster, out_type = "none")
 ```
 
-### Labels without clustering
+### with labels instead of clustering
 If the labeled cell type is given as it is now, we can use them to replace
 clustering step with more accuracy:
 ```R

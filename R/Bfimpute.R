@@ -16,9 +16,9 @@
 #' imputation. Default is \code{1}.
 #' @param ccluster The cluster approach: give \code{labeled} and corporate with
 #' param \code{label} (see details in \code{label}) if the cells are
-#' labeled, give the specific number \code{5} or \code{6} or ... if only the
-#' cluster number is known, give \code{Seurat} and we will detect the clusters
-#' on our own if lack of information, and of cause you can use your own cluster
+#' labeled; give the specific number \code{5} or \code{6} or ... if only the
+#' cluster number is known; give \code{Seurat} and we will detect the clusters
+#' on our own if lack of information; and of cause you can use your own cluster
 #' method and give us a function with a matrix as input and a vector as output
 #' (will only be used when \code{method} is set to \code{1}). Default is
 #' \code{Seurat}.

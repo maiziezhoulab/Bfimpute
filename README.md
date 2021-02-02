@@ -15,7 +15,7 @@ In this section we will run the dataset from [Chu. et al (2016)](https://link.sp
 and the version with QC can be downloaded from
 [here](https://drive.google.com/drive/folders/1C2rjTDy3Lvi4DE988FvGSOOCODVUyDI-?usp=sharing).
 
-### Quick start
+### Seurat clustering
 ```R
 library(Bfimpute)
 ```
@@ -33,26 +33,47 @@ bulk = read.csv(paste0(data_dir, "bulk_qc.csv"), row.names = 1, header = T)
 cell_type = read.csv(paste0(data_dir, "cell_type.csv"), row.names = 1, header = T)
 # unique(cell_type)
 ```
+Run `Bfimpute` with unsupervised clustering `Seurat` as default:
+```R
+counts_imputed <- Bfimpute(counts, ncores = 5)
+```
+
+### Spectrum clustering
 As we already know that there are `7` cell types in this dataset, we can run
-Bfimpute as shown:
+`Bfimpute` using `Spectrum` as shown:
 ```R
 counts_imputed <- Bfimpute(counts, ccluster = 7, ncores = 5)
 ```
 
-### Label
-If the labeled cell type is given as it is now, we can use them to
-assist the imputation:
+### Other clustering methods
+If other clustering methods implemented in the future is more powerful, we can
+easily use them and replace our clustering step by building a function. The
+input of `ccluster` should be a matrix with points to cluster as
+columns and rows as features.
+
+We present `kmeans` as an example here:
+```R
+N = 7 # cell types
+ccluster = function(x){kmeans(t(x), centers = N)$cluster}
+counts_imp = Bfimpute(counts = counts, ccluster = ccluster, out_type = "none")
+```
+
+### Labels without clustering
+If the labeled cell type is given as it is now, we can use them to replace
+clustering step with more accuracy:
 ```R
 counts_imputed <- Bfimpute(counts, ccluster = "labeled", label = cell_type, ncores = 5)
 ```
 
+
 ### Side information
 If some gene side information is available for the raw counts, make it a
 positive matrix and having columns in the same gene orders as in the row of the
-count matrix. And we can use them to assist the model training.
+count matrix. And we can use them to assist the imputation (`ccluster` here can
+be changed to any options mentioned above):
 ```R
 S_G = t(bulk)
-counts_imputed <- Bfimpute(counts, ccluster = "labeled", label = cell_type, S_G = S_G, ncores = 5)
+counts_imputed <- Bfimpute(counts, ccluster = "Seurat", S_G = S_G, ncores = 5)
 ```
 Similarly, if some cell side information is also available, make it a positive
 matrix and having columns in the same cell orders as in the column of the count
@@ -64,9 +85,9 @@ matrix. And use the parameter `S_C` in the same way.
 columns corresponding to cells.
 - `ccluster` The cluster approach: give `labeled` and corporate with
 param `label` (see details in `label`) if the cells are
-labeled, give the specific number `5` or `6` or ... if only the
-cluster number is known, give `Seurat` and we will detect the clusters
-on our own if lack of information, and of cause you can use your own cluster
+labeled; give the specific number `5` or `6` or ... if only the
+cluster number is known; give `Seurat` and we will detect the clusters
+on our own if lack of information; and of cause you can use your own cluster
 method and give us a function with a matrix as input and a vector as output
 (will only be used when `method` is set to `1`). Default is
 `Seurat`.

@@ -1,5 +1,4 @@
 Gibbs_sampling <- function(R, X_U = NULL, X_V = NULL, D = 32, totalepoch = 300, burnin = 200, sn_max = 10, sn_init = 1, method){
-  # did not test this part as a entire function
   #-----------------------parameters----------------------#
   #     R                   # matrix that should be imputed
   #     X_U = NULL          # U feature matrix
@@ -56,12 +55,8 @@ Gibbs_sampling <- function(R, X_U = NULL, X_V = NULL, D = 32, totalepoch = 300, 
 
   #-------------------Impute using macau------------------#
   for(epoch in 1:totalepoch){
-    # print(paste0("  epoch ",epoch))
-    # print(paste0('epoch', epoch))
     list_ml = list()
     # Sampling #
-    # if(epoch == 1){
-    #browser()
     list_ml = sample_mu_U_Lambda_U(U, X_U, beta_U, lambda_beta_U, mu_0, nu_0, W_0, beta_0)
     mu_U = list_ml[[1]]
     Lambda_U = list_ml[[2]]
@@ -69,14 +64,8 @@ Gibbs_sampling <- function(R, X_U = NULL, X_V = NULL, D = 32, totalepoch = 300, 
     list_ml = sample_mu_U_Lambda_U(V, X_V, beta_V, lambda_beta_V, mu_0, nu_0, W_0, beta_0)
     mu_V = list_ml[[1]]
     Lambda_V = list_ml[[2]]
-    # }
-    # else
-    # {
-    #   [mu_U,Lambda_U] = sample_mu_U_Lambda_U(U, X_U, beta_U, lambda_beta_U, mu_0, nu_0, W_0, beta_0, Lambda_U)
-    #   [mu_V,Lambda_V] = sample_mu_U_Lambda_U(V, X_V, beta_V, lambda_beta_V, mu_0, nu_0, W_0, beta_0, Lambda_V)
-    # }
+
     U = sample_U0(U, R, V, X_U, beta_U, Lambda_U, mu_U, alpha)                 ####
-    #if(epoch == 55){browser()}
     V = sample_U0(V, t(R), U, X_V, beta_V, Lambda_V, mu_V, alpha)                 ####
 
     U = sample_U0(U, R, V, X_U, beta_U, Lambda_U, mu_U, alpha)                 ####

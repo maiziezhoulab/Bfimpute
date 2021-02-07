@@ -91,7 +91,7 @@
 #' @author Xin (Maizie) Zhou, \email{maizie.zhou@vanderbilt.edu}
 #' @references
 #'
-Bfimpute <- function(counts, method = 1, ccluster = 10, label = NULL,
+Bfimpute <- function(counts, method = 1, ccluster = "Seurat", label = NULL,
                      normalized = FALSE, S_G = NULL, S_C = NULL, D = 32,
                      totalepoch = 300, burnin = 200, sn_max = 10, sn_init = 1,
                      threshold = 0.5, ncores = 5, out_dir = "./Bfimpute/",

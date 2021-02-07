@@ -68,14 +68,14 @@ choose_method <- function(mat_pcs, counts_selected, non_out, ccluster, label){
     sres = spec_res$assignments
     okay = 1
   }
-  
+
   if(okay == 0)
-    stop("ccluster can only be a function, a number, or a charactor as followed: 'labeled', 'Seurat', 'Spectrum1', 'Spectrum2'!")
+    stop("ccluster can only be a function, a number, or a charactor as followed: 'labeled', 'Seurat'!")
   if(okay == 1){
     clust = rep(NA, ncol(counts_selected))
     clust[non_out] = sres
   }
-  
+
   num_clusters = sum(!is.na(unique(clust)))
   Knumbers = rep(0, num_clusters)
   for(ii in 1:num_clusters){
@@ -83,7 +83,7 @@ choose_method <- function(mat_pcs, counts_selected, non_out, ccluster, label){
   }
   print("cluster sizes:")
   print(Knumbers)
-  
+
   return(clust)
 }
 
@@ -93,24 +93,24 @@ seurat_clustering <- function(count_s){
     rownames(count_s) = 1:nrow(count_s)
   }
   Sdata <- CreateSeuratObject(count_s)
-  
+
   Sdata <- NormalizeData(Sdata)
-  
+
   Sdata <- FindVariableFeatures(Sdata, selection.method = "vst", nfeatures = 2000)
-  
+
   Sdata <- ScaleData(Sdata, features = rownames(Sdata))
-  
+
   Sdata <- RunPCA(Sdata, features = VariableFeatures(object = Sdata))
-  
+
   #Sdata <- JackStraw(Sdata, num.replicate = 100)
   #ElbowPlot(Sdata)
-  
+
   #cell--1:15
   Sdata <- FindNeighbors(Sdata, dims = 1:15)
   # Sdata <- FindNeighbors(Sdata)
   Sdata <- FindClusters(Sdata, resolution = 0.5)
-  
+
   new_clust <- as.numeric(Idents(Sdata))
-  
+
   return(new_clust)
 }

@@ -1,7 +1,11 @@
+# This part of code is partly adopted from scImpute.
+# pca + specc / Spectrum
+# x-x model
+
 clustering <- function(counts, ccluster, label, infimum){
   I = nrow(counts)
   J = ncol(counts)
-    
+
   selist = lapply(1:I, function(i) setdiff(counts[i, ], infimum))
   gmean = sapply(1:I,function(i){
     mean(selist[[i]])
@@ -14,10 +18,10 @@ clustering <- function(counts, ccluster, label, infimum){
   gcv = gstd/gmean
   gcv[is.na(gcv)] = 0
   selected = which(gmean >= 1 & gcv >= quantile(gcv, 0.25))
-  if(length(selected) < 500){ 
+  if(length(selected) < 500){
     selected = 1:I}
   counts_selected = counts[selected, ]
-  
+
   if(J < 5000){
     var_thre = 0.4
     pca = prcomp(t(counts_selected))
@@ -25,7 +29,7 @@ clustering <- function(counts, ccluster, label, infimum){
     var_thre = 0.6
     pca = rpca(t(counts_selected), k = 1000, center = TRUE, scale = FALSE)
   }
-  
+
   eigs = (pca$sdev)^2
   var_cum = cumsum(eigs)/sum(eigs)
   if(max(var_cum) <= var_thre){
@@ -34,13 +38,13 @@ clustering <- function(counts, ccluster, label, infimum){
     npc = which.max(var_cum > var_thre)
     npc = max(npc, 15)                        ############
   }
-  
+
   if(npc < 3){
     npc = 3
   }
-  
+
   mat_pcs = t(pca$x[, 1:npc])
-  
+
   dist_cells = matrix(rep(0,J*J), nrow = J)
   for(id1 in 1:J){
     dist_cells[id1,] = c(sapply(1:id1, function(id2){
@@ -48,18 +52,18 @@ clustering <- function(counts, ccluster, label, infimum){
     }),rep(0,J-id1))
   }
   dist_cells = dist_cells + t(dist_cells)
-  
+
   min_dist = sapply(1:J, function(i){
     min(dist_cells[i, -i])
   })
   iqr = quantile(min_dist, 0.75) - quantile(min_dist, 0.25)
-  outliers = which(min_dist > 2.5 * quantile(min_dist, 0.75) - 
+  outliers = which(min_dist > 2.5 * quantile(min_dist, 0.75) -
                      1.5 * quantile(min_dist, 0.25))
-  
+
   non_out = setdiff(1:J, outliers)
-  
+
   clust = choose_method(mat_pcs, counts_selected, non_out, ccluster, label)
-  
+
   return(clust)
 }
 
@@ -78,9 +82,9 @@ update_pars <- function(xdata, wt){
     }else{
       alpha = uniroot(function(alpha, target){
         log(alpha) - digamma(alpha) - target
-      }, 
-      c(0.9, 1.1) * alpha0, 
-      target = tp_v, 
+      },
+      c(0.9, 1.1) * alpha0,
+      target = tp_v,
       extendInt = "yes")$root
     }
   }
@@ -101,25 +105,25 @@ mixing <- function(xdata, infimum){
   eps = 10
   iter = 0
   loglik_old = 0
-  
+
   while(eps > 0.5) {
     pz1 = paramt[1] * dgamma(xdata, shape = paramt[2], rate = paramt[3])
     pz2 = (1 - paramt[1]) * dnorm(xdata, mean = paramt[4], sd = paramt[5])
     pz = pz1/(pz1 + pz2)
     pz[pz1 == 0] = 0
     wt = cbind(pz, 1 - pz)
-    
+
     paramt[1] = sum(wt[, 1])/nrow(wt)
     paramt[4] = sum(wt[, 2] * xdata)/sum(wt[, 2])
     paramt[5] = sqrt(sum(wt[, 2] * (xdata - paramt[4])^2)/sum(wt[, 2]))
     paramt[2:3] = update_pars(xdata, wt[,1])
-    
+
     loglik = sum(log10(paramt[1] * dgamma(xdata, shape = paramt[2], rate = paramt[3])
                        + (1 - paramt[1]) * dnorm(xdata, mean = paramt[4], sd = paramt[5])))
     eps = (loglik - loglik_old)^2
     loglik_old = loglik
     iter = iter + 1
-    if (iter > 100) 
+    if (iter > 100)
       break
   }
   return(paramt)
@@ -156,7 +160,7 @@ select_genes <- function(parslist, subcount, infimum){
   dcheck1 = dgamma(mu+1, shape = parslist[, "alpha"], rate = parslist[, "beta"])
   dcheck2 = dnorm(mu+1, mean = parslist[, "mu"], sd = parslist[, "sigma"])
   sgene3 = which(dcheck1 >= dcheck2 & mu <= 1)
-  
+
   sgene = union(sgene1, sgene3)
   selectgs = setdiff(selectgs, sgene)
   return(selectgs)
@@ -165,15 +169,15 @@ select_genes <- function(parslist, subcount, infimum){
 
 scluster <- function(counts, ccluster, label, infimum, threshold){
   clust = clustering(counts, ccluster, label, infimum)
-  
+
   return(lapply(1:length(unique(clust[!is.na(clust)])), function(cc){
     cells = which(clust == cc)
     parslist = parameters(counts[, cells], infimum)
     selectgs = select_genes(parslist, counts[, cells], infimum)
-    
+
     subc = counts[selectgs, cells, drop = FALSE]
     parslist = parslist[selectgs, , drop = FALSE]
-    
+
     droprate = t(sapply(1:nrow(subc), function(i) {
       xdata = subc[i, ]
       paramt = parslist[i, ]
@@ -184,13 +188,13 @@ scluster <- function(counts, ccluster, label, infimum, threshold){
       wt = cbind(pz, 1 - pz)
       return(wt[, 1])
     }))
-    
+
     meancheck = sweep(subc, MARGIN = 1, parslist[, "mu"], FUN = ">")
     droprate[meancheck & droprate > threshold] = 0
 
     true_data = droprate <= threshold
-    
+
     return(list(cells = cells, selectgs = selectgs, true_data = true_data))
   }))
-  
+
 }

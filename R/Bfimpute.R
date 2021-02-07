@@ -11,17 +11,12 @@
 #'
 #' @param counts Expression count matrix with rows corresponding to genes and
 #' columns corresponding to cells.
-#' @param method Preprocessing choice: \code{1} for using Pre-QC, Pre-cluster
-#' and dropout identification steps before imputation and \code{2} for just the
-#' imputation. Default is \code{1}.
 #' @param ccluster The cluster approach: give \code{labeled} and corporate with
-#' param \code{label} (see details in \code{label}) if the cells are
-#' labeled; give the specific number \code{5} or \code{6} or ... if only the
-#' cluster number is known; give \code{Seurat} and we will detect the clusters
-#' on our own if lack of information; and of cause you can use your own cluster
+#' param \code{label} (see details in \code{label}) if the cells are labeled;
+#' give a specific number and a spectral clustering approach chosen from
+#' \code{specc, Spectrum} otherwise; and of cause you can use your own cluster
 #' method and give us a function with a matrix as input and a vector as output
-#' (will only be used when \code{method} is set to \code{1}). Default is
-#' \code{Seurat}.
+#' Default is \code{c(8,"specc")}.
 #' @param label Cell cluster labels which can be a vector, data.frame, matrix
 #' with one row or one column, and etc (will only be used when \code{ccluster}
 #' is set to \code{labeled}). Default is \code{NULL}.
@@ -39,8 +34,7 @@
 #' Markov chain. Default is \code{200}.
 #' @param sn_max Maximum adaptive precision. Default is \code{10}.
 #' @param sn_init Initial adaptive precision. Default is \code{1}.
-#' @param threshold The threshold on dropout probabilities. (will only be used
-#' when \code{method} is set to \code{1}). Default is \code{0.5}.
+#' @param threshold The threshold on dropout probabilities. Default is \code{0.5}.
 #' @param ncores Number of cores to use. Default is \code{5}.
 #' @param out_dir The path and folder to store the results. Default is
 #' \code{"./Bfimpute/"}.
@@ -59,10 +53,10 @@
 #' @import stats
 #' @import utils
 #' @import parallel
-#' @import Seurat
 #' @import Spectrum
 #' @import rsvd
 #' @import mnormt
+#' @importFrom kernlab specc
 #'
 #' @examples
 #' \donttest{
@@ -82,16 +76,16 @@
 #' sim <- splatter::splatSimulate(params, method = "groups")
 #' counts <- sim@assays@data@listData[["counts"]]
 #' # or you can use your own data and make its name counts
-#' counts_imputed <- Bfimpute(counts, ccluster = "Seurat", label = NULL,
+#' counts_imputed <- Bfimpute(counts, ccluster = c(8,"specc"), label = NULL,
 #'                            normalized = FALSE, S_G = NULL, S_C = NULL,
-#'                            ncores = 5)
+#'                            ncores = 1)
 #' }
 #'
 #' @author Zihang Wen, \email{wenzihang0506@gmail.com}
 #' @author Xin (Maizie) Zhou, \email{maizie.zhou@vanderbilt.edu}
 #' @references
 #'
-Bfimpute <- function(counts, method = 1, ccluster = "Seurat", label = NULL,
+Bfimpute <- function(counts, ccluster = c(8,"specc"), label = NULL,
                      normalized = FALSE, S_G = NULL, S_C = NULL, D = 32,
                      totalepoch = 300, burnin = 200, sn_max = 10, sn_init = 1,
                      threshold = 0.5, ncores = 5, out_dir = "./Bfimpute/",
@@ -119,7 +113,8 @@ Bfimpute <- function(counts, method = 1, ccluster = "Seurat", label = NULL,
   }
 
   #--------------------Imputation-------------------#
-  if(method == 1){
+  method = 1
+  # if(method == 1){
     slist = scluster(counts, ccluster, label, infimum, threshold)
     R_calculate_list = mclapply(1:length(slist), function(cc){
       print(paste0("imputing cluster ", cc))
@@ -142,11 +137,11 @@ Bfimpute <- function(counts, method = 1, ccluster = "Seurat", label = NULL,
     for(cc in 1:length(slist)){
       R_calculate[slist[[cc]]$selectgs, slist[[cc]]$cells] = R_calculate_list[[cc]]
     }
-  }
-  if(method == 2){
-    counts[counts == infimum] = 0
-    R_calculate = Gibbs_sampling(counts, S_G, S_C, D, totalepoch, burnin, sn_max, sn_init, method)
-  }
+  # }
+  # if(method == 2){
+  #   counts[counts == infimum] = 0
+  #   R_calculate = Gibbs_sampling(counts, S_G, S_C, D, totalepoch, burnin, sn_max, sn_init, method)
+  # }
   R_calculate[R_calculate<infimum] = infimum
 
   #-----------------Denormalization----------------#

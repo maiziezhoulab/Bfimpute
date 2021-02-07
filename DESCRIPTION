@@ -18,11 +18,13 @@ Depends:
     stats,
     utils,
     parallel,
-    Seurat,
     Spectrum,
     rsvd,
     mnormt
+Imports: 
+    kernlab
 biocViews:
 Suggests: 
     splatter,
     scater
+

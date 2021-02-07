@@ -22,18 +22,6 @@ choose_method <- function(mat_pcs, counts_selected, non_out, ccluster, label){
     if(okay == 0)
       stop("There is something wrong with 'ccluster' function!")
   }
-  # specific clusters
-  if(is.numeric(ccluster) & okay == 0){
-    if(length(ccluster) == 1){
-      if(ccluster - floor(ccluster) == 0){
-        if(ccluster == 1){
-          sres = rep(1,ncol(mat_pcs[,non_out]))
-        }else{
-          spec_res = Spectrum(mat_pcs[,non_out],method=3,maxk=10,fixk=ccluster)
-          sres = spec_res$assignments
-        }}}
-    okay = 1
-  }
   # label
   if(ccluster == "labeled" & okay == 0){
     if(is.null(label))
@@ -52,25 +40,24 @@ choose_method <- function(mat_pcs, counts_selected, non_out, ccluster, label){
     clust = as.numeric(label_)
     okay = 2
   }
-  # autos
-  if(ccluster == "Seurat" & okay == 0){
-    colnames(counts_selected) = 1:ncol(counts_selected)
-    sres <- seurat_clustering(counts_selected[,non_out])
-    okay = 1
-  }
-  if(ccluster == "Spectrum1" & okay == 0){
-    spec_res = Spectrum(mat_pcs[,non_out],method=1)
-    sres = spec_res$assignments
-    okay = 1
-  }
-  if(ccluster == "Spectrum2" & okay == 0){
-    spec_res = Spectrum(mat_pcs[,non_out],method=2)
-    sres = spec_res$assignments
-    okay = 1
+  # specific clusters
+  if(length(ccluster) == 2 & okay == 0){
+    k1 = as.numeric(ccluster[1])
+    k2 = ccluster[2]
+    if(k2 == "Spectrum"){
+      spec_res = Spectrum(mat_pcs[,non_out],method=3,maxk=10,fixk=k1)
+      sres = spec_res$assignments
+      okay = 1
+    }
+    if(k2 == "specc"){
+      spec_res = specc(t(mat_pcs[, non_out]), centers = k1, kernel = "rbfdot")
+      sres = spec_res
+      okay = 1
+    }
   }
 
   if(okay == 0)
-    stop("ccluster can only be a function, a number, or a charactor as followed: 'labeled', 'Seurat'!")
+    stop("Wrong input of ccluster!")
   if(okay == 1){
     clust = rep(NA, ncol(counts_selected))
     clust[non_out] = sres

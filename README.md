@@ -66,7 +66,7 @@ counts_imputed <- Bfimpute(counts, ccluster = "labeled", label = cell_type, ncor
 ```
 
 
-### Side information
+### Gene or cell related information
 If some gene side information is available for the raw counts, make it a
 positive matrix and having columns in the same gene orders as in the row of the
 count matrix. And we can use them to assist the imputation (`ccluster` here can
@@ -84,24 +84,19 @@ matrix. And use the parameter `S_C` in the same way.
 - `counts` Expression count matrix with rows corresponding to genes and
 columns corresponding to cells.
 - `ccluster` The cluster approach: give `labeled` and corporate with
-param `label` (see details in `label`) if the cells are
-labeled; give the specific number `5` or `6` or ... if only the
-cluster number is known; give `Seurat` and we will detect the clusters
-on our own if lack of information; and of cause you can use your own cluster
+param `label` (see details in `label`) if the cells are labeled;
+give a specific number and a spectral clustering approach chosen from
+`specc, Spectrum` otherwise; and of cause you can use your own cluster
 method and give us a function with a matrix as input and a vector as output
-(will only be used when `method` is set to `1`). Default is
-`Seurat`.
+Default is `c(8,"specc")`.
+
+### Optional
 - `S_G` Gene latent matrix with `D` rows and the columns
 corresponding to genes. Default is `NULL` which means no Gene latent
 matrix.
 - `S_C` Cell latent matrix with `D` rows and the columns
 corresponding to cells. Default is `NULL` which means no cell latent
 matrix.
-
-### Optional
-- `method` Preprocessing choice: `1` for using Pre-QC, Pre-cluster
-and dropout identification steps before imputation and `2` for just the
-imputation. Default is `1`.
 - `label` Cell cluster labels which can be a vector, data.frame, matrix
 with one row or one column, and etc (will only be used when `ccluster`
 is set to `labeled`). Default is `NULL`.
@@ -113,8 +108,7 @@ raw and `TRUE` for not. Default is `FALSE`.
 Markov chain. Default is `200`.
 - `sn_max` Maximum adaptive precision. Default is `10`.
 - `sn_init` Initial adaptive precision. Default is `1`.
-- `threshold` The threshold on dropout probabilities. (will only be used
-when `method` is set to `1`). Default is `0.5`.
+- `threshold` The threshold on dropout probabilities. Default is `0.5`.
 - `ncores` Number of cores to use. Default is `5`.
 - `out_dir` The path and folder to store the results. Default is
 `"./Bfimpute/"`.

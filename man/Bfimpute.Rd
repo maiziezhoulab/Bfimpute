@@ -6,7 +6,7 @@
 \usage{
 Bfimpute(
   counts,
-  ccluster = c(8, "specc"),
+  ccluster = c(7, "Spectrum"),
   label = NULL,
   normalized = FALSE,
   S_G = NULL,
@@ -32,7 +32,7 @@ param \code{label} (see details in \code{label}) if the cells are labeled;
 give a specific number and a spectral clustering approach chosen from
 \code{specc, Spectrum} otherwise; and of cause you can use your own cluster
 method and give us a function with a matrix as input and a vector as output
-Default is \code{c(8,"specc")}.}
+Default is \code{c(7,"Spectrum")}.}
 
 \item{label}{Cell cluster labels which can be a vector, data.frame, matrix
 with one row or one column, and etc (will only be used when \code{ccluster}

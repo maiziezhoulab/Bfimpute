@@ -15,7 +15,7 @@ In this section we will run the dataset from [Chu. et al (2016)](https://link.sp
 and the version with QC can be downloaded from
 [here](https://drive.google.com/drive/folders/1C2rjTDy3Lvi4DE988FvGSOOCODVUyDI-?usp=sharing).
 
-### with Seurat clustering
+### with spectral clustering
 ```R
 library(Bfimpute)
 ```
@@ -33,16 +33,12 @@ bulk = read.csv(paste0(data_dir, "bulk_qc.csv"), row.names = 1, header = T)
 cell_type = read.csv(paste0(data_dir, "cell_type.csv"), row.names = 1, header = T)
 # unique(cell_type)
 ```
-Run `Bfimpute` with unsupervised clustering `Seurat` as default:
-```R
-counts_imputed <- Bfimpute(counts, ncores = 5)
-```
-
-### with Spectrum clustering
 As we already know that there are `7` cell types in this dataset, we can run
-`Bfimpute` using `Spectrum` as shown:
+`Bfimpute` using `Spectrum` or `specc` as shown:
 ```R
-counts_imputed <- Bfimpute(counts, ccluster = 7, ncores = 5)
+counts_imputed <- Bfimpute(counts, ccluster = c(7,"Spectrum"), ncores = 5)
+# or
+# counts_imputed <- Bfimpute(counts, ccluster = c(7,"specc"), ncores = 5)
 ```
 
 ### with other clustering methods
@@ -73,7 +69,7 @@ count matrix. And we can use them to assist the imputation (`ccluster` here can
 be changed to any options mentioned above):
 ```R
 S_G = t(bulk)
-counts_imputed <- Bfimpute(counts, ccluster = "Seurat", S_G = S_G, ncores = 5)
+counts_imputed <- Bfimpute(counts, ccluster = c(7,"Spectrum"), S_G = S_G, ncores = 5)
 ```
 Similarly, if some cell side information is also available, make it a positive
 matrix and having columns in the same cell orders as in the column of the count

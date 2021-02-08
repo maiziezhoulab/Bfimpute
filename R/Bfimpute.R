@@ -16,7 +16,7 @@
 #' give a specific number and a spectral clustering approach chosen from
 #' \code{specc, Spectrum} otherwise; and of cause you can use your own cluster
 #' method and give us a function with a matrix as input and a vector as output
-#' Default is \code{c(8,"specc")}.
+#' Default is \code{c(7,"Spectrum")}.
 #' @param label Cell cluster labels which can be a vector, data.frame, matrix
 #' with one row or one column, and etc (will only be used when \code{ccluster}
 #' is set to \code{labeled}). Default is \code{NULL}.
@@ -85,7 +85,7 @@
 #' @author Xin (Maizie) Zhou, \email{maizie.zhou@vanderbilt.edu}
 #' @references
 #'
-Bfimpute <- function(counts, ccluster = c(8,"specc"), label = NULL,
+Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
                      normalized = FALSE, S_G = NULL, S_C = NULL, D = 32,
                      totalepoch = 300, burnin = 200, sn_max = 10, sn_init = 1,
                      threshold = 0.5, ncores = 5, out_dir = "./Bfimpute/",

@@ -1,6 +1,6 @@
-# This part of code is partly adopted from scImpute.
-# pca + specc / Spectrum
-# x-x model
+# This part of code is partly adopted from scImpute in doing the pca before
+# clustering and in implementing Gamma-Normal mixture distribution model to
+# detect real dropouts.
 
 clustering <- function(counts, ccluster, label, infimum){
   I = nrow(counts)
@@ -189,7 +189,9 @@ scluster <- function(counts, ccluster, label, infimum, threshold){
       return(wt[, 1])
     }))
 
-    meancheck = sweep(subc, MARGIN = 1, parslist[, "mu"], FUN = ">")
+    meancheck = t(sapply(1:nrow(subc),function(nn){
+      subc[nn,]>parslist[nn, "mu"]
+    }))
     droprate[meancheck & droprate > threshold] = 0
 
     true_data = droprate <= threshold

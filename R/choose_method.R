@@ -23,7 +23,7 @@ choose_method <- function(mat_pcs, counts_selected, non_out, ccluster, label){
       stop("There is something wrong with 'ccluster' function!")
   }
   # label
-  if(ccluster == "labeled" & okay == 0){
+  if(length(ccluster == "labeled") & okay == 0){
     if(is.null(label))
       stop("There is no label inputed!")
     if(!is.null(dim(label)) & sum(dim(label) != 1) > 1)
@@ -50,6 +50,7 @@ choose_method <- function(mat_pcs, counts_selected, non_out, ccluster, label){
       okay = 1
     }
     if(k2 == "specc"){
+      set.seed(10)
       spec_res = specc(t(mat_pcs[, non_out]), centers = k1, kernel = "rbfdot")
       sres = spec_res
       okay = 1

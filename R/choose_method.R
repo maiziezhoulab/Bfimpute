@@ -3,7 +3,7 @@ choose_method <- function(mat_pcs, counts_selected, non_out, ccluster, label){
   okay = 0
   # function
   if(is.function(ccluster) & okay == 0){
-    sres = ccluster(counts_selected[,non_out])
+    sres = ccluster(mat_pcs[,non_out])
     if(is.data.frame(sres) | is.matrix(sres) | is.array(sres) | is.vector(sres)){
       temp = sres
       temp = as.matrix(temp)

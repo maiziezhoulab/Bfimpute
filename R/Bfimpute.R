@@ -67,7 +67,7 @@
 #' sce <- scater::mockSCE()
 #' params <- splatter::splatEstimate(sce)
 #' params <- splatter::setParams(params, update = list(nGenes = 20000,
-#'                                           group.prob = rep(0.125,8),
+#'                                           group.prob = rep(0.2,5),
 #'                                           de.prob = 0.08,
 #'                                           de.facLoc = 0.3,
 #'                                           de.facScale = 0.5,
@@ -76,7 +76,7 @@
 #' sim <- splatter::splatSimulate(params, method = "groups")
 #' counts <- sim@assays@data@listData[["counts"]]
 #' # or you can use your own data and make its name counts
-#' counts_imputed <- Bfimpute(counts, ccluster = c(8,"specc"), label = NULL,
+#' counts_imputed <- Bfimpute(counts, ccluster = c(5,"specc"), label = NULL,
 #'                            normalized = FALSE, S_G = NULL, S_C = NULL,
 #'                            ncores = 1)
 #' }

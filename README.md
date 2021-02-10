@@ -23,7 +23,7 @@ Set the folder direction of your data below:
 ```R
 data_dir = "./"
 ```
-For dataset we present, you can load the cell types, bulk and single-cell counts
+For dataset we present, you can load the cell types, bulk and scRNAseq counts
 matrices as followed:
 ```R
 counts = read.csv(paste0(data_dir, "sc_qc.csv"), row.names = 1, header = T)

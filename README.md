@@ -23,7 +23,7 @@ Set the folder direction of your data below:
 ```R
 data_dir = "./"
 ```
-For dataset we present, you can load the cell types, bulk and single-cell counts
+For dataset we present, you can load the cell types, bulk and scRNAseq counts
 matrices as followed:
 ```R
 counts = read.csv(paste0(data_dir, "sc_qc.csv"), row.names = 1, header = T)
@@ -54,7 +54,7 @@ ccluster = function(x){kmeans(t(x), centers = N)$cluster}
 counts_imp = Bfimpute(counts = counts, ccluster = ccluster, out_type = "none")
 ```
 
-### with labels instead of clustering
+### with cell labels instead of clustering
 If the labeled cell type is given as it is now, we can use them to replace
 clustering step and gain more accuracy:
 ```R

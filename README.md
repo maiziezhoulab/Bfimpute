@@ -54,7 +54,7 @@ ccluster = function(x){kmeans(t(x), centers = N)$cluster}
 counts_imp = Bfimpute(counts = counts, ccluster = ccluster, out_type = "none")
 ```
 
-### with labels instead of clustering
+### with cell labels instead of clustering
 If the labeled cell type is given as it is now, we can use them to replace
 clustering step and gain more accuracy:
 ```R

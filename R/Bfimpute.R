@@ -75,15 +75,22 @@
 #'                                           dropout.type = "experiment"))
 #' sim <- splatter::splatSimulate(params, method = "groups")
 #' counts <- sim@assays@data@listData[["counts"]]
-#' # or you can use your own data and make its name counts
+#' # impute via Bfimpute
 #' counts_imputed <- Bfimpute(counts, ccluster = c(5,"specc"), label = NULL,
 #'                            normalized = FALSE, S_G = NULL, S_C = NULL,
 #'                            ncores = 1)
 #' }
 #'
-#' @author Zihang Wen, \email{wenzihang0506@gmail.com}
+#' @author Zi-Hang Wen, \email{wenzihang0506@gmail.com}
 #' @author Xin (Maizie) Zhou, \email{maizie.zhou@vanderbilt.edu}
-#' @references
+#'
+#' @references Wen et al.
+#' Bfimpute: A Bayesian factorization method to recover single-cell RNA
+#' sequencing data \emph{bioRxiv}, 2021. doi:
+#' \url{https://doi.org/10.1101/2021.02.10.430649}.
+#'
+#' See more usage in \url{https://github.com/maiziezhoulab/Bfimpute}
+#'
 #'
 Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
                      normalized = FALSE, S_G = NULL, S_C = NULL, D = 32,

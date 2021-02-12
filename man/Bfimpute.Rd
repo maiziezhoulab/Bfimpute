@@ -118,7 +118,7 @@ counts_imputed <- Bfimpute(counts, ccluster = c(5,"specc"), label = NULL,
 \references{
 Wen et al.
 Bfimpute: A Bayesian factorization method to recover single-cell RNA
-sequencing data \emph{bioRxiv}, 2021. doi:
+sequencing data. \emph{bioRxiv}, 2021. doi:
 \url{https://doi.org/10.1101/2021.02.10.430649}.
 
 See more usage in \url{https://github.com/maiziezhoulab/Bfimpute}

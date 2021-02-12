@@ -122,5 +122,5 @@ On the contrary, smaller parameters will save your time.
 ## Reference
 Z.H. Wen, J. L. Langsam, L. Zhang, W. Shen, and X. Zhou.
 Bfimpute: A Bayesian factorization method to recover single-cell RNA
-sequencing data *bioRxiv*, 2021. doi: [10.1101/2021.02.10.430649.](https://doi.org/10.1101/2021.02.10.430649)
+sequencing data. *bioRxiv*, 2021. doi: [10.1101/2021.02.10.430649.](https://doi.org/10.1101/2021.02.10.430649)
 

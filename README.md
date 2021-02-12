@@ -49,7 +49,7 @@ columns and rows as features, while the output is a vector of cluster result.
 
 We present `kmeans` as an example here:
 ```R
-N = 7 # cell types
+N = 7 # number of cell types
 ccluster = function(x){kmeans(t(x), centers = N)$cluster}
 counts_imp = Bfimpute(counts = counts, ccluster = ccluster, ncores = 5)
 ```

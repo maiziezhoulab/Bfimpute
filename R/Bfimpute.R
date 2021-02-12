@@ -14,7 +14,7 @@
 #' @param ccluster The cluster approach: give \code{labeled} and corporate with
 #' param \code{label} (see details in \code{label}) if the cells are labeled;
 #' give a specific number and a spectral clustering approach chosen from
-#' \code{specc, Spectrum} otherwise; and of cause you can use your own cluster
+#' \code{Spectrum, specc} otherwise; and of cause you can use your own cluster
 #' method and give us a function with a matrix as input and a vector as output
 #' Default is \code{c(7,"Spectrum")}.
 #' @param label Cell cluster labels which can be a vector, data.frame, matrix
@@ -35,7 +35,7 @@
 #' @param sn_max Maximum adaptive precision. Default is \code{10}.
 #' @param sn_init Initial adaptive precision. Default is \code{1}.
 #' @param threshold The threshold on dropout probabilities. Default is \code{0.5}.
-#' @param ncores Number of cores to use. Default is \code{5}.
+#' @param ncores Number of cores used in parallel computation. Default is \code{5}.
 #' @param out_dir The path and folder to store the results. Default is
 #' \code{"./Bfimpute/"}.
 #' @param out_name The file name which Bfimpute will save as. Default is

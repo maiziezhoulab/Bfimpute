@@ -30,7 +30,7 @@ columns corresponding to cells.}
 \item{ccluster}{The cluster approach: give \code{labeled} and corporate with
 param \code{label} (see details in \code{label}) if the cells are labeled;
 give a specific number and a spectral clustering approach chosen from
-\code{specc, Spectrum} otherwise; and of cause you can use your own cluster
+\code{Spectrum, specc} otherwise; and of cause you can use your own cluster
 method and give us a function with a matrix as input and a vector as output
 Default is \code{c(7,"Spectrum")}.}
 
@@ -62,7 +62,7 @@ Markov chain. Default is \code{200}.}
 
 \item{threshold}{The threshold on dropout probabilities. Default is \code{0.5}.}
 
-\item{ncores}{Number of cores to use. Default is \code{5}.}
+\item{ncores}{Number of cores used in parallel computation. Default is \code{5}.}
 
 \item{out_dir}{The path and folder to store the results. Default is
 \code{"./Bfimpute/"}.}

@@ -82,9 +82,9 @@ columns corresponding to cells.
 - `ccluster` The cluster approach: give `labeled` and corporate with
 param `label` (see details in `label`) if the cells are labeled;
 give a specific number and a spectral clustering approach chosen from
-`specc, Spectrum` otherwise; and of cause you can use your own cluster
+`Spectrum, specc` otherwise; and of cause you can use your own cluster
 method and give us a function with a matrix as input and a vector as output
-Default is `c(8,"specc")`.
+Default is `c(7,"Spectrum")`.
 
 ### Optional
 - `S_G` Gene latent matrix with `D` rows and the columns
@@ -105,7 +105,7 @@ Markov chain. Default is `200`.
 - `sn_max` Maximum adaptive precision. Default is `10`.
 - `sn_init` Initial adaptive precision. Default is `1`.
 - `threshold` The threshold on dropout probabilities. Default is `0.5`.
-- `ncores` Number of cores to use. Default is `5`.
+- `ncores` Number of cores used in parallel computation. Default is `5`.
 - `out_dir` The path and folder to store the results. Default is
 `"./Bfimpute/"`.
 - `out_name` The file name which Bfimpute will save as. Default is

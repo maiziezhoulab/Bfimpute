@@ -104,7 +104,7 @@ params <- splatter::setParams(params, update = list(nGenes = 20000,
                                           de.prob = 0.08,
                                           de.facLoc = 0.3,
                                           de.facScale = 0.5,
-                                          batchCells = 800,
+                                          batchCells = 500,
                                           dropout.type = "experiment"))
 sim <- splatter::splatSimulate(params, method = "groups")
 counts <- sim@assays@data@listData[["counts"]]

@@ -23,7 +23,7 @@ choose_method <- function(mat_pcs, counts_selected, non_out, ccluster, label){
       stop("There is something wrong with 'ccluster' function!")
   }
   # label
-  if(length(ccluster == "labeled") & okay == 0){
+  if(sum(ccluster == "labeled") & okay == 0){
     if(is.null(label))
       stop("There is no label inputed!")
     if(!is.null(dim(label)) & sum(dim(label) != 1) > 1)

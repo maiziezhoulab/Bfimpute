@@ -78,7 +78,7 @@
 #' # impute via Bfimpute
 #' counts_imputed <- Bfimpute(counts, ccluster = c(5,"specc"), label = NULL,
 #'                            normalized = FALSE, S_G = NULL, S_C = NULL,
-#'                            ncores = 1)
+#'                            ncores = 5)
 #' }
 #'
 #' @author Zi-Hang Wen, \email{wenzihang0506@gmail.com}

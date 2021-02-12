@@ -51,7 +51,7 @@ We present `kmeans` as an example here:
 ```R
 N = 7 # cell types
 ccluster = function(x){kmeans(t(x), centers = N)$cluster}
-counts_imp = Bfimpute(counts = counts, ccluster = ccluster, out_type = "none")
+counts_imp = Bfimpute(counts = counts, ccluster = ccluster, ncores = 5)
 ```
 
 ### with cell labels instead of clustering

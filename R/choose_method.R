@@ -44,12 +44,16 @@ choose_method <- function(mat_pcs, counts_selected, non_out, ccluster, label){
   if(length(ccluster) == 2 & okay == 0){
     k1 = as.numeric(ccluster[1])
     k2 = ccluster[2]
-    if(k2 == "Spectrum"){
+    if(k1 == 1 & okay == 0){
+      sres = rep(1,ncol(mat_pcs[,non_out]))
+      okay = 1
+    }
+    if(k2 == "Spectrum" & okay == 0){
       spec_res = Spectrum(mat_pcs[,non_out],method=3,maxk=10,fixk=k1)
       sres = spec_res$assignments
       okay = 1
     }
-    if(k2 == "specc"){
+    if(k2 == "specc" & okay == 0){
       set.seed(10)
       spec_res = specc(t(mat_pcs[, non_out]), centers = k1, kernel = "rbfdot")
       sres = spec_res
@@ -73,32 +77,4 @@ choose_method <- function(mat_pcs, counts_selected, non_out, ccluster, label){
   print(Knumbers)
 
   return(clust)
-}
-
-
-seurat_clustering <- function(count_s){
-  if(is.null(rownames(count_s))){
-    rownames(count_s) = 1:nrow(count_s)
-  }
-  Sdata <- CreateSeuratObject(count_s)
-
-  Sdata <- NormalizeData(Sdata)
-
-  Sdata <- FindVariableFeatures(Sdata, selection.method = "vst", nfeatures = 2000)
-
-  Sdata <- ScaleData(Sdata, features = rownames(Sdata))
-
-  Sdata <- RunPCA(Sdata, features = VariableFeatures(object = Sdata))
-
-  #Sdata <- JackStraw(Sdata, num.replicate = 100)
-  #ElbowPlot(Sdata)
-
-  #cell--1:15
-  Sdata <- FindNeighbors(Sdata, dims = 1:15)
-  # Sdata <- FindNeighbors(Sdata)
-  Sdata <- FindClusters(Sdata, resolution = 0.5)
-
-  new_clust <- as.numeric(Idents(Sdata))
-
-  return(new_clust)
 }

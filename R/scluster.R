@@ -45,7 +45,7 @@ clustering <- function(counts, ccluster, label, infimum){
 
   mat_pcs = t(pca$x[, 1:npc])
 
-  dist_cells = matrix(rep(0,J*J), nrow = J)
+  dist_cells = matrix(0, nrow = J, ncol = J)
   for(id1 in 1:J){
     dist_cells[id1,] = c(sapply(1:id1, function(id2){
       sqrt(sum((mat_pcs[, id1] - mat_pcs[, id2])^2))

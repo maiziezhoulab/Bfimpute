@@ -20,7 +20,8 @@ Bfimpute(
   ncores = 5,
   out_dir = "./Bfimpute/",
   out_name = "Bfimpute",
-  out_type = "all"
+  out_type = "all",
+  returnUV = F
 )
 }
 \arguments{
@@ -73,6 +74,11 @@ Markov chain. Default is \code{200}.}
 \item{out_type}{The file type which Bfimpute will save as: "csv", "txt",
 "rds", and "all" for all the three types, or "none" for just returning
 without saving. Default is \code{"all"}.}
+
+\item{returnUV}{Whether return the U and V matrices of the final epoch. If
+\code{TRUE}, \code{Bfimpute} will return a list which consists of the imputed
+matrix \code{R_calculate}, \code{U}, and \code{V}. If \code{FALSE},
+\code{Bfimpute} will return the imputed matrix only.}
 }
 \value{
 Bfimpute returns the imputed matrix with the same dimension as

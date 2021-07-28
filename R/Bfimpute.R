@@ -123,6 +123,11 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
     infimum = 0.01
   }
 
+  if(returnUV){
+    assign("global.U", c(), envir = .GlobalEnv)
+    assign("global.V", c(), envir = .GlobalEnv)
+  }
+
   #--------------------Imputation-------------------#
   method = 1
   # if(method == 1){
@@ -190,6 +195,8 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
 
   print("Finish imputing")
   if(returnUV){
+    get('global.U', envir=.GlobalEnv)
+    get('global.V', envir=.GlobalEnv)
     return(list(R_calculate = R_calculate, U = global.U, V = global.V))
   }else{
     return(R_calculate)

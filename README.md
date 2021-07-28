@@ -115,8 +115,8 @@ Markov chain. Default is `200`.
 without saving. Default is `"all"`.
 - `returnUV` Whether return the U and V matrices of the final epoch. If
 `TRUE`, `Bfimpute` will return a list which consists of the imputed
-matrix `R_calculate`, `U`, and `V`. If `FALSE`,
-`Bfimpute` will return the imputed matrix only.
+matrix `R_calculate`, `U`, and `V`. If `FALSE`, `Bfimpute` will return the
+imputed matrix only. Default is `FALSE`.
 
 ### Note
 Larger `D`, `totalepoch`, and `burnin` will increase the accuracy of the

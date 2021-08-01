@@ -96,7 +96,7 @@ Gibbs_sampling <- function(R, X_U = NULL, X_V = NULL, D = 32, totalepoch = 300, 
   if(method == 1){
     R_calculate[ff] = R[ff]
   }
-  if(returnV){
+  if(returnUV){
     return(list(R_calculate,U,V))
   }
   return(R_calculate)

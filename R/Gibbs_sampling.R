@@ -1,4 +1,4 @@
-Gibbs_sampling <- function(R, X_U = NULL, X_V = NULL, D = 32, totalepoch = 300, burnin = 200, sn_max = 10, sn_init = 1, method, returnUV = F){
+Gibbs_sampling <- function(R, X_U = NULL, X_V = NULL, D = 32, totalepoch = 300, burnin = 200, sn_max = 10, sn_init = 1, method, returnV = F){
   #-----------------------parameters----------------------#
   #     R                   # matrix that should be imputed
   #     X_U = NULL          # U feature matrix
@@ -96,8 +96,9 @@ Gibbs_sampling <- function(R, X_U = NULL, X_V = NULL, D = 32, totalepoch = 300, 
   if(method == 1){
     R_calculate[ff] = R[ff]
   }
-  if(returnUV){
-    return(list(R_calculate,U,V))
+  if(returnV){
+    # return(list(R_calculate,U,V))
+    return(list(R_calculate,V))
   }
   return(R_calculate)
 }

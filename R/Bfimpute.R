@@ -43,10 +43,10 @@
 #' @param out_type The file type which Bfimpute will save as: "csv", "txt",
 #' "rds", and "all" for all the three types, or "none" for just returning
 #' without saving. Default is \code{"all"}.
-#' @param returnUV Whether return the U and V matrices of the final epoch. If
+#' @param returnV Whether return the U and V matrices of the final epoch. If
 #' \code{TRUE}, \code{Bfimpute} will return a list which consists of the imputed
-#' matrix \code{R_calculate}, \code{U}, and \code{V}. If \code{FALSE},
-#' \code{Bfimpute} will return the imputed matrix only. Default is \code{FALSE}.
+#' matrix \code{R_calculate}, and \code{V}. If \code{FALSE}, \code{Bfimpute}
+#' will return the imputed matrix only. Default is \code{FALSE}.
 #'
 #' @return Bfimpute returns the imputed matrix with the same dimension as
 #' \code{counts}. And it also saves the imputed count matrix to the specific
@@ -100,7 +100,7 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
                      normalized = FALSE, S_G = NULL, S_C = NULL, D = 32,
                      totalepoch = 300, burnin = 200, sn_max = 10, sn_init = 1,
                      threshold = 0.5, ncores = 5, out_dir = "./Bfimpute/",
-                     out_name = "Bfimpute", out_type = "all", returnUV = F){
+                     out_name = "Bfimpute", out_type = "all", returnV = F){
   counts = as.matrix(counts)
   print("Running Bfimpute")
   #----------------------check---------------------#
@@ -123,8 +123,8 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
     infimum = 0.01
   }
 
-  if(returnUV){
-    global.U = c()
+  if(returnV){
+    # global.U = c()
     global.V = c()
   }
 
@@ -147,26 +147,27 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
         S_C_cc = t(S_C_cc)
       }
 
-      return(Gibbs_sampling(counts_cc, S_G_cc, S_C_cc, D, totalepoch, burnin, sn_max, sn_init, method, returnUV))
+      return(Gibbs_sampling(counts_cc, S_G_cc, S_C_cc, D, totalepoch, burnin, sn_max, sn_init, method, returnV))
     }, mc.cores = ncores)
     R_calculate = counts
     for(cc in 1:length(slist)){
-      if(returnUV){
+      if(returnV){
         R_calculate[slist[[cc]]$selectgs, slist[[cc]]$cells] = R_calculate_list[[cc]][[1]]
 
-        U_temp = R_calculate_list[[cc]][[2]]
-        V_temp = R_calculate_list[[cc]][[3]]
-        if(is.null(rownames(counts))){
-          colnames(U_temp) = slist[[cc]]$selectgs
-        }else{
-          colnames(U_temp) = rownames(counts)[slist[[cc]]$selectgs]
-        }
+        # U_temp = R_calculate_list[[cc]][[2]]
+        # V_temp = R_calculate_list[[cc]][[3]]
+        V_temp = R_calculate_list[[cc]][[2]]
+        # if(is.null(rownames(counts))){
+        #   colnames(U_temp) = slist[[cc]]$selectgs
+        # }else{
+        #   colnames(U_temp) = rownames(counts)[slist[[cc]]$selectgs]
+        # }
         if(is.null(colnames(counts))){
           colnames(V_temp) = slist[[cc]]$cells
         }else{
           colnames(V_temp) = colnames(counts)[slist[[cc]]$cells]
         }
-        global.U = cbind(global.U, U_temp)
+        # global.U = cbind(global.U, U_temp)
         global.V = cbind(global.V, V_temp)
       }else{
         R_calculate[slist[[cc]]$selectgs, slist[[cc]]$cells] = R_calculate_list[[cc]]
@@ -175,7 +176,7 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
   # }
   # if(method == 2){
   #   counts[counts == infimum] = 0
-  #   R_calculate = Gibbs_sampling(counts, S_G, S_C, D, totalepoch, burnin, sn_max, sn_init, method, returnUV)
+  #   R_calculate = Gibbs_sampling(counts, S_G, S_C, D, totalepoch, burnin, sn_max, sn_init, method, returnV)
   # }
   R_calculate[R_calculate<infimum] = infimum
 
@@ -213,8 +214,9 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
   }
 
   print("Finish imputing")
-  if(returnUV){
-    return(list(R_calculate = R_calculate, U = global.U, V = global.V))
+  if(returnV){
+    # return(list(R_calculate = R_calculate, U = global.U, V = global.V))
+    return(list(R_calculate = R_calculate, V = global.V))
   }else{
     return(R_calculate)
   }

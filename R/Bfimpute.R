@@ -124,8 +124,8 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
   }
 
   if(returnUV){
-    assign("global.U", c(), envir = .GlobalEnv)
-    assign("global.V", c(), envir = .GlobalEnv)
+    global.U = c()
+    global.V = c()
   }
 
   #--------------------Imputation-------------------#
@@ -151,7 +151,26 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
     }, mc.cores = ncores)
     R_calculate = counts
     for(cc in 1:length(slist)){
-      R_calculate[slist[[cc]]$selectgs, slist[[cc]]$cells] = R_calculate_list[[cc]]
+      if(returnUV){
+        R_calculate[slist[[cc]]$selectgs, slist[[cc]]$cells] = R_calculate_list[[cc]][[1]]
+
+        U_temp = R_calculate_list[[cc]][[2]]
+        V_temp = R_calculate_list[[cc]][[3]]
+        if(is.null(rownames(counts))){
+          colnames(U_temp) = slist[[cc]]$selectgs
+        }else{
+          colnames(U_temp) = rownames(counts)[slist[[cc]]$selectgs]
+        }
+        if(is.null(colnames(counts))){
+          colnames(V_temp) = slist[[cc]]$cells
+        }else{
+          colnames(V_temp) = colnames(counts)[slist[[cc]]$cells]
+        }
+        global.U = cbind(global.U, U_temp)
+        global.V = cbind(global.V, V_temp)
+      }else{
+        R_calculate[slist[[cc]]$selectgs, slist[[cc]]$cells] = R_calculate_list[[cc]]
+      }
     }
   # }
   # if(method == 2){
@@ -195,8 +214,6 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
 
   print("Finish imputing")
   if(returnUV){
-    get('global.U', envir=.GlobalEnv)
-    get('global.V', envir=.GlobalEnv)
     return(list(R_calculate = R_calculate, U = global.U, V = global.V))
   }else{
     return(R_calculate)

@@ -97,10 +97,7 @@ Gibbs_sampling <- function(R, X_U = NULL, X_V = NULL, D = 32, totalepoch = 300, 
     R_calculate[ff] = R[ff]
   }
   if(returnUV){
-    get('global.U', envir=.GlobalEnv)
-    get('global.V', envir=.GlobalEnv)
-    assign("global.U", cbind(global.U, U), envir = .GlobalEnv)
-    assign("global.V", cbind(global.V, V), envir = .GlobalEnv)
+    return(list(R_calculate,U,V))
   }
   return(R_calculate)
 }

@@ -125,7 +125,7 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
 
   if(returnV){
     # global.U = c()
-    global.V = c()
+    global.V = list()
   }
 
   #--------------------Imputation-------------------#
@@ -168,7 +168,8 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
           colnames(V_temp) = colnames(counts)[slist[[cc]]$cells]
         }
         # global.U = cbind(global.U, U_temp)
-        global.V = cbind(global.V, V_temp)
+        global.V[[cc]] = V_temp
+        names(global.V)[cc] = paste0("cluster_",cc)
       }else{
         R_calculate[slist[[cc]]$selectgs, slist[[cc]]$cells] = R_calculate_list[[cc]]
       }

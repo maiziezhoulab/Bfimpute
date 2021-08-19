@@ -113,9 +113,9 @@ Markov chain. Default is `200`.
 - `out_type` The file type which Bfimpute will save as: "csv", "txt",
 "rds", and "all" for all the three types, or "none" for just returning
 without saving. Default is `"all"`.
-- `returnUV` Whether return the U and V matrices of the final epoch. If
+- `returnGC` Whether return the G and C matrices of the final epoch. If
 `TRUE`, `Bfimpute` will return a list which consists of the imputed
-matrix `R_calculate`, `U`, and `V`. If `FALSE`, `Bfimpute` will return the
+matrix `R_calculate`, `G`, and `C`. If `FALSE`, `Bfimpute` will return the
 imputed matrix only. Default is `FALSE`.
 
 ### Note

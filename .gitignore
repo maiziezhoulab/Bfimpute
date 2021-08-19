@@ -5,3 +5,5 @@
 .Rproj
 Bfimpute.Rproj
 .DS_Store
+.Rbuildignore
+.gitignore

@@ -190,16 +190,22 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
     R_calculate = R_calculate - 0.01
   }
 
+  if(returnGC){
+    Bfimpute.return = list(R_calculate = R_calculate, G = global.G, C = global.C)
+  }else{
+    Bfimpute.return = R_calculate
+  }
+
   if(out_type != "none"
      & out_type != "all"
      & out_type != "csv"
      & out_type != "txt"
      & out_type != "rds"){
     warning("\"out_type\" can only be \"csv\", \"txt\", \"rds\", \"all\", or \"none\"!")
-    return(R_calculate)
+    return(Bfimpute.return)
   }
   if(out_type == "none"){
-    return(R_calculate)
+    return(Bfimpute.return)
   }
   dir.create(out_dir, recursive = TRUE)
   if(out_type == "all"){
@@ -215,10 +221,6 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
   }
 
   print("Finish imputing")
-  if(returnGC){
-    return(list(R_calculate = R_calculate, G = global.G, C = global.C))
-  }else{
-    return(R_calculate)
-  }
+  return(Bfimpute.return)
 }
 

@@ -49,8 +49,14 @@ choose_method <- function(mat_pcs, counts_selected, non_out, ccluster, label){
       okay = 1
     }
     if(k2 == "Spectrum" & okay == 0){
-      spec_res = Spectrum(mat_pcs[,non_out],method=3,maxk=10,fixk=k1)
-      sres = spec_res$assignments
+      if(non_out < 5000){
+        spec_res = Spectrum(mat_pcs[,non_out],method=3,maxk=10,fixk=k1)
+        sres = spec_res$assignments
+      }else{
+        spec_res = Spectrum(mat_pcs[,non_out],method=3,maxk=10,fixk=k1,
+                            FASP = T,FASPk=k1)
+        sres = spec_res$allsample_assignments
+      }
       okay = 1
     }
     if(k2 == "specc" & okay == 0){

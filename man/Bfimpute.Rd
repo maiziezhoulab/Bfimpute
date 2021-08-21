@@ -21,7 +21,7 @@ Bfimpute(
   out_dir = "./Bfimpute/",
   out_name = "Bfimpute",
   out_type = "all",
-  returnUV = F
+  returnGC = F
 )
 }
 \arguments{
@@ -75,9 +75,9 @@ Markov chain. Default is \code{200}.}
 "rds", and "all" for all the three types, or "none" for just returning
 without saving. Default is \code{"all"}.}
 
-\item{returnUV}{Whether return the U and V matrices of the final epoch. If
+\item{returnGC}{Whether return the G and C matrices of the final epoch. If
 \code{TRUE}, \code{Bfimpute} will return a list which consists of the imputed
-matrix \code{R_calculate}, \code{U}, and \code{V}. If \code{FALSE},
+matrix \code{R_calculate}, \code{G}, and \code{C}. If \code{FALSE},
 \code{Bfimpute} will return the imputed matrix only. Default is \code{FALSE}.}
 }
 \value{

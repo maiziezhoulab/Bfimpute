@@ -1,4 +1,8 @@
-# Bfimpute
+# Bfimpute: A Bayesian matrix factorization imputation method
+
+[![Cell Publication DOI](https://zenodo.org/badge/DOI/10.1101/2021.02.10.430649.svg)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3867727)
+[![Github Stars](https://img.shields.io/github/stars/maiziezhoulab/Bfimpute.svg?style=social&label=Stars)](https://github.com/maiziezhoulab/Bfimpute/)
+
 Bfimpute is a powerful imputation tool for scRNA-seq data that
 recovers the dropout event by factorizing the count matrix into the product
 of gene-specific and cell-specific feature matrices.

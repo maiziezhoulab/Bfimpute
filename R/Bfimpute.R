@@ -85,8 +85,7 @@
 #'                            ncores = 5)
 #' }
 #'
-#' @author Zi-Hang Wen, \email{wenzihang0506@gmail.com}
-#' @author Xin (Maizie) Zhou, \email{maizie.zhou@vanderbilt.edu}
+#' @author Zi-Hang Wen \email{wenzihang0506@gmail.com}
 #'
 #' @references Wen et al.
 #' Bfimpute: A Bayesian factorization method to recover single-cell RNA

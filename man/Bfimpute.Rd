@@ -8,7 +8,7 @@ Bfimpute(
   counts,
   ccluster = c(7, "Spectrum"),
   label = NULL,
-  normalized = FALSE,
+  logtransformed = FALSE,
   S_G = NULL,
   S_C = NULL,
   D = 32,
@@ -39,8 +39,8 @@ Default is \code{c(7,"Spectrum")}.}
 with one row or one column, and etc (will only be used when \code{ccluster}
 is set to \code{labeled}). Default is \code{NULL}.}
 
-\item{normalized}{Whether the \code{counts} is raw or not. \code{FALSE} for
-raw and \code{TRUE} for not. Default is \code{FALSE}.}
+\item{logtransformed}{Whether the \code{counts} is log-transformed.
+\code{TRUE} yes and \code{FALSE} for not. Default is \code{FALSE}.}
 
 \item{S_G}{Gene latent matrix with \code{D} rows and the columns
 corresponding to genes. Default is \code{NULL} which means no Gene latent
@@ -116,7 +116,7 @@ sim <- splatter::splatSimulate(params, method = "groups")
 counts <- sim@assays@data@listData[["counts"]]
 # impute via Bfimpute
 counts_imputed <- Bfimpute(counts, ccluster = c(5,"specc"), label = NULL,
-                           normalized = FALSE, S_G = NULL, S_C = NULL,
+                           logtransformed = FALSE, S_G = NULL, S_C = NULL,
                            ncores = 5)
 }
 

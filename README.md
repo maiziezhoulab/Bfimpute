@@ -100,8 +100,8 @@ matrix.
 - `label` Cell cluster labels which can be a vector, data.frame, matrix
 with one row or one column, and etc (will only be used when `ccluster`
 is set to `labeled`). Default is `NULL`.
-- `normalized` Whether the `counts` is raw or not. `FALSE` for
-raw and `TRUE` for not. Default is `FALSE`.
+- `logtransformed` Whether the `counts` is log-transformed. `TRUE` for
+yes and `FALSE` for not. Default is `FALSE`.
 - `D` Dimension of the latent factor. Default is `32`.
 - `totalepoch` Total number of epochs. Default is `300`.
 - `burnin` Number of burn-in epochs which are only be used as running

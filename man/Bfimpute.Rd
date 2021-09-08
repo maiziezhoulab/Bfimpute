@@ -130,7 +130,5 @@ sequencing data. \emph{bioRxiv}, 2021. doi:
 See more usage in \url{https://github.com/maiziezhoulab/Bfimpute}
 }
 \author{
-Zi-Hang Wen, \email{wenzihang0506@gmail.com}
-
-Xin (Maizie) Zhou, \email{maizie.zhou@vanderbilt.edu}
+Zi-Hang Wen \email{wenzihang0506@gmail.com}
 }

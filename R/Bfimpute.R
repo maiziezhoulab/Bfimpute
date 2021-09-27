@@ -20,8 +20,11 @@
 #' @param label Cell cluster labels which can be a vector, data.frame, matrix
 #' with one row or one column, and etc (will only be used when \code{ccluster}
 #' is set to \code{labeled}). Default is \code{NULL}.
-#' @param logtransformed Whether the \code{counts} is log-transformed.
-#' \code{TRUE} yes and \code{FALSE} for not. Default is \code{FALSE}.
+#' @param normalized Whether the \code{counts} is normalized. \code{TRUE} for
+#' yes and \code{FALSE} for not. If \code{FALSE}, Bfimpute will perform CPM and
+#' log10 transform with bias 1.01. If \code{TRUE}, Bfimpute will not perform CPM
+#' or log10 transform. But we highly recommend you to use log-transform after
+#' normalization on your own. Default is \code{FALSE}.
 #' @param S_G Gene latent matrix with \code{D} rows and the columns
 #' corresponding to genes. Default is \code{NULL} which means no Gene latent
 #' matrix.
@@ -81,7 +84,7 @@
 #' counts <- sim@assays@data@listData[["counts"]]
 #' # impute via Bfimpute
 #' counts_imputed <- Bfimpute(counts, ccluster = c(5,"specc"), label = NULL,
-#'                            logtransformed = FALSE, S_G = NULL, S_C = NULL,
+#'                            normalized = FALSE, S_G = NULL, S_C = NULL,
 #'                            ncores = 5)
 #' }
 #'
@@ -96,7 +99,7 @@
 #'
 #'
 Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
-                     logtransformed = FALSE, S_G = NULL, S_C = NULL, D = 32,
+                     normalized = FALSE, S_G = NULL, S_C = NULL, D = 32,
                      totalepoch = 300, burnin = 200, sn_max = 10, sn_init = 1,
                      threshold = 0.5, ncores = 5, out_dir = "./Bfimpute/",
                      out_name = "Bfimpute", out_type = "all", returnGC = F){
@@ -111,7 +114,7 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
       stop("The column number of S_C is different from the column number of counts.")
 
   #------------------Normalization-----------------#
-  if(logtransformed == FALSE){
+  if(normalized == FALSE){
     sum_for_cell = apply(counts,2,sum)
     sum_for_cell[sum_for_cell == 0] = 1
     counts = t(1e6 * t(counts) / sum_for_cell)
@@ -181,7 +184,7 @@ Bfimpute <- function(counts, ccluster = c(7,"Spectrum"), label = NULL,
   R_calculate[R_calculate<infimum] = infimum
 
   #-----------------Denormalization----------------#
-  if(logtransformed == FALSE){
+  if(normalized == FALSE){
     R_calculate = 10^R_calculate - 1.01                 ####
     R_calculate = t(1e-6 * t(R_calculate) * sum_for_cell)
   }

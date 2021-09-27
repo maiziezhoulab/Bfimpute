@@ -8,7 +8,7 @@ Bfimpute(
   counts,
   ccluster = c(7, "Spectrum"),
   label = NULL,
-  logtransformed = FALSE,
+  normalized = FALSE,
   S_G = NULL,
   S_C = NULL,
   D = 32,
@@ -39,8 +39,11 @@ Default is \code{c(7,"Spectrum")}.}
 with one row or one column, and etc (will only be used when \code{ccluster}
 is set to \code{labeled}). Default is \code{NULL}.}
 
-\item{logtransformed}{Whether the \code{counts} is log-transformed.
-\code{TRUE} yes and \code{FALSE} for not. Default is \code{FALSE}.}
+\item{normalized}{Whether the \code{counts} is normalized. \code{TRUE} for
+yes and \code{FALSE} for not. If \code{FALSE}, Bfimpute will perform CPM and
+log10 transform with bias 1.01. If \code{TRUE}, Bfimpute will not perform CPM
+or log10 transform. But we highly recommend you to use log-transform after
+normalization on your own. Default is \code{FALSE}.}
 
 \item{S_G}{Gene latent matrix with \code{D} rows and the columns
 corresponding to genes. Default is \code{NULL} which means no Gene latent
@@ -116,7 +119,7 @@ sim <- splatter::splatSimulate(params, method = "groups")
 counts <- sim@assays@data@listData[["counts"]]
 # impute via Bfimpute
 counts_imputed <- Bfimpute(counts, ccluster = c(5,"specc"), label = NULL,
-                           logtransformed = FALSE, S_G = NULL, S_C = NULL,
+                           normalized = FALSE, S_G = NULL, S_C = NULL,
                            ncores = 5)
 }
 

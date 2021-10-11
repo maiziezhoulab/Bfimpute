@@ -1,6 +1,6 @@
 # Bfimpute: A Bayesian matrix factorization imputation method
 
-[![Cell Publication DOI](https://zenodo.org/badge/DOI/10.1101/2021.02.10.430649.svg)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3867727)
+[![Cell Publication DOI](https://zenodo.org/badge/DOI/10.2139/ssrn.3867727.svg)](https://dx.doi.org/10.2139/ssrn.3867727)
 [![repo size](https://img.shields.io/github/repo-size/maiziezhoulab/Bfimpute.svg)](https://github.com/maiziezhoulab/Bfimpute/archive/master.zip)
 [![GitHub stars](https://img.shields.io/github/stars/maiziezhoulab/Bfimpute.svg?logo=github&label=Stars&logoColor=white)](https://github.com/maiziezhoulab/Bfimpute)
 

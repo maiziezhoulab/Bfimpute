@@ -132,8 +132,9 @@ Larger `D`, `totalepoch`, and `burnin` will increase the accuracy of the
 imputation, but it may take more efforts to run the process as a price.
 On the contrary, smaller parameters will save your time.
 
+The tool is implemented with hyperparameters set to: `\mu_0=0`, `\beta_0=2`,
+`\nu_0=D`, and `W_0=I` (the identity matrix).
+
 ## Reference
-Z.H. Wen, J. L. Langsam, L. Zhang, W. Shen, and X. Zhou.
-Bfimpute: A Bayesian factorization method to recover single-cell RNA
-sequencing data. *bioRxiv*, 2021. doi: [10.1101/2021.02.10.430649.](https://doi.org/10.1101/2021.02.10.430649)
+Wen et al., A Bayesian factorization method to recover single-cell RNA sequencing data. Cell Reports Methods (2021), https://doi.org/10.1016.j.crmeth.2021.100133
 

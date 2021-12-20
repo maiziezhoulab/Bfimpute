@@ -1,4 +1,4 @@
-# Bfimpute: A Bayesian matrix factorization imputation method
+# Bfimpute: A Bayesian factorization method to recover single- cell RNA sequencing data
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5676122.svg)](https://doi.org/10.5281/zenodo.5676122)
 [![repo size](https://img.shields.io/github/repo-size/maiziezhoulab/Bfimpute.svg)](https://github.com/maiziezhoulab/Bfimpute/archive/master.zip)

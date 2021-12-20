@@ -136,5 +136,5 @@ The tool is implemented with hyperparameters set to: `\mu_0=0`, `\beta_0=2`,
 `\nu_0=D`, and `W_0=I` (the identity matrix).
 
 ## Reference
-Wen et al., A Bayesian factorization method to recover single-cell RNA sequencing data. Cell Reports Methods (2021), https://doi.org/10.1016.j.crmeth.2021.100133
+Wen et al., A Bayesian factorization method to recover single-cell RNA sequencing data. Cell Reports Methods (2021), https://doi.org/10.1016/j.crmeth.2021.100133
 

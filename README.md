@@ -2,8 +2,6 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5676122.svg)](https://doi.org/10.5281/zenodo.5676122)
 [![repo size](https://img.shields.io/github/repo-size/maiziezhoulab/Bfimpute.svg)](https://github.com/maiziezhoulab/Bfimpute/archive/master.zip)
-[![GitHub stars](https://img.shields.io/github/stars/maiziezhoulab/Bfimpute.svg?logo=github&label=Stars&logoColor=white)](https://github.com/maiziezhoulab/Bfimpute)
-
 
 Bfimpute is a powerful imputation tool for scRNA-seq data that
 recovers the dropout event by factorizing the count matrix into the product
